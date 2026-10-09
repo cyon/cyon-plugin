@@ -5,6 +5,12 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.2.6 (2026-10-09)
+
+- `cyon-static-site`, `cyon-php-app`, `cyon-cms` and `cyon-provisioning-checklist` put a domain
+  the customer already registered on the hosting with `domain_add`. Registering a new domain stays
+  an order in my.cyon.
+
 ## 0.2.5 (2026-09-29)
 
 - `cyon-static-site` has a section for clients without a shell, such as Claude on the web and

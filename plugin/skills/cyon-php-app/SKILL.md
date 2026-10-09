@@ -1,7 +1,7 @@
 ---
 name: cyon-php-app
 description: Build or deploy a PHP application on cyon hosting, from plain PHP and Slim to Laravel and Symfony, with one document root and SQLite or MariaDB. Use when a project has server-side logic, logins, a database, queued jobs or scheduled tasks, including a shop that is not WooCommerce. Covers the layout with public/ as document root, where .env and storage live, Composer off the hosting, the database credentials file, cron-driven workers, and what a shop adds.
-cyon-facts-version: 2026-09-23
+cyon-facts-version: 2026-10-09
 ---
 
 # A PHP application on cyon
@@ -123,7 +123,8 @@ application where four things go wrong expensively:
 
 ## With the MCP server connected
 
-1. `domain_list` and `site_list`, or `subdomain_create` for a new project.
+1. `domain_list` and `site_list`, or `subdomain_create` for a new project, or `domain_add` when the
+   customer brings a domain they already registered.
 2. `php_version_set` for the document root, after checking the versions in `hosting_get`.
 3. `database_create` if the project uses MariaDB.
 4. `deploy_prepare` with `type: dynamic`, the application root, the document root,

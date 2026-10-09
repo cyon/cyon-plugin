@@ -1,7 +1,7 @@
 ---
 name: cyon-provisioning-checklist
 description: The steps on a cyon hosting that a person has to perform in my.cyon, as an ordered runbook to hand over. Use when preparing a cyon hosting for a deployment, when a tool call refuses because a prerequisite is missing, or when asked what the customer has to click before a site can go live. Says which steps the cyon MCP server performs itself and which genuinely need a human, so nothing is claimed as automated that is not.
-cyon-facts-version: 2026-09-29
+cyon-facts-version: 2026-10-09
 ---
 
 # Provisioning a cyon hosting
@@ -20,6 +20,7 @@ Do not put these in a runbook for the customer. Call them:
 | Find the hosting and its sites | `hosting_list`, `domain_list`, `site_list`, `site_get` |
 | Read plan, quotas and available PHP versions | `hosting_get` |
 | Create a subdomain with its directory and DNS | `subdomain_create` |
+| Put a domain the customer already registered on the hosting, with its directory and DNS zone | `domain_add`; registering a new domain is an order in my.cyon |
 | Point an existing domain at another directory | `site_docroot_set` |
 | Set the PHP version for a document root | `php_version_set` |
 | Create a database, its user and the grant | `database_create` |

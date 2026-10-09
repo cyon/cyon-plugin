@@ -1,7 +1,7 @@
 ---
 name: cyon-static-site
 description: Build and publish a static site on cyon hosting, from plain HTML to Astro, Vite, Eleventy and Hugo, or Next, Nuxt and SvelteKit as a static export. Use when a project needs no server-side logic, when a contact form is its only dynamic part, or when a static frontend gets a small PHP API beside it. Covers the local build, the disposable publish target, .htaccess for redirects and headers, and the form endpoint.
-cyon-facts-version: 2026-09-29
+cyon-facts-version: 2026-10-09
 ---
 
 # A static site on cyon
@@ -123,7 +123,9 @@ deploys the way `cyon-php-app` describes.
 In this order:
 
 1. `domain_list` and `site_list` to resolve the hosting and the exact site, or
-   `subdomain_create` for a fresh one, which is the default for a new project.
+   `subdomain_create` for a fresh one, which is the default for a new project. A domain the
+   customer already registered goes on the hosting with `domain_add`, which also says whether its
+   DNS points here yet.
 2. `php_version_set` only if the site has a form or an API endpoint.
 3. `deploy_prepare` with `type: static` and `dedicated_static_output: true`, which you set only
    after confirming the target holds nothing but build output.
