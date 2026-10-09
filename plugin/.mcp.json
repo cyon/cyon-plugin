@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "cyon": {
+      "type": "http",
+      "url": "${CYON_MCP_URL:-https://mcp.cyon.ch/mcp}"
+    }
+  }
+}

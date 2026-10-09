@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cyon",
+  "description": "The cyon plugin: platform knowledge and the cyon MCP server, for building and publishing a website on cyon hosting.",
+  "owner": {
+    "name": "cyon GmbH",
+    "url": "https://www.cyon.ch"
+  },
+  "plugins": [
+    {
+      "name": "cyon",
+      "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions.",
+      "category": "deployment",
+      "source": "./plugin"
+    }
+  ]
+}
