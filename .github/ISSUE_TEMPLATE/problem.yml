@@ -1,0 +1,40 @@
+name: Something does not work
+description: A tool call fails, a skill gives wrong advice, or the plugin does not install.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues here are public. Before you paste anything, remove passwords, database credentials, private keys, tokens and customer data. A problem with your hosting itself goes to cyon support, not here.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you asked the assistant, what it did, and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: request
+    attributes:
+      label: Request ID
+      description: A failed tool call returns a request_id in its error. With it, cyon finds the call in the logs.
+      placeholder: 0f4a1c9b7e2d5638
+  - type: textarea
+    id: conversation
+    attributes:
+      label: Conversation
+      description: |
+        Claude Code: run /export and attach the file. Codex has no export: attach the session's rollout file from ~/.codex/sessions/<year>/<month>/<day>/, the newest one for this conversation. Both contain every command and tool result, so check them for secrets first, see above.
+  - type: input
+    id: client
+    attributes:
+      label: Client and version
+      description: The output of claude --version or codex --version, and your operating system.
+      placeholder: Claude Code 2.1.290 on macOS 26
+    validations:
+      required: true
+  - type: input
+    id: plugin
+    attributes:
+      label: Plugin version
+      description: The version of the cyon plugin, as Claude Code's /plugin or Codex's plugin list shows it.
+      placeholder: 0.2.6

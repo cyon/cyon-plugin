@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: A problem with your hosting
+    url: https://www.cyon.ch/support
+    about: Questions about your hosting, domains or invoices go to cyon support.
