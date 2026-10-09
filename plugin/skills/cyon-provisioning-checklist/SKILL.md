@@ -36,7 +36,7 @@ Every write needs a one-line summary and an idempotency key, and asks the custom
 
 ## What still needs a person in my.cyon
 
-Five things, and each has a symptom you will meet if it was skipped:
+Six things, and each has a symptom you will meet if it was skipped:
 
 | Step | Where | Symptom if missing |
 | --- | --- | --- |
@@ -44,6 +44,7 @@ Five things, and each has a symptom you will meet if it was skipped:
 | Enable a disabled function, such as `exec` or `proc_open` | Einstellungen, PHP-Einstellungen | `symfony/process` or a shell-out to `/usr/bin/convert` fails at runtime |
 | Activate HTTPS on a hosting with more than fifty sites on the old certificate workflow | Sicherheit, Kostenlose SSL-Zertifikate | `https_enable` refuses with `https_unavailable` and requests nothing; the portal activates per site and works there |
 | Raise the mail limit above 100 per hour | E-Mail, Versandlimit | Mail is throttled silently, order confirmations disappear |
+| Create a mailbox for a shop's or a form's sender address | E-Mail, E-Mail-Konten | Replies and bounces land nowhere, while the site still reports every mail as sent |
 | WebSockets on a Managed Server | On request, through support | A WebSocket server does not serve |
 
 The Let's Encrypt terms need the customer's yes, not a click in my.cyon: `https_enable` refuses

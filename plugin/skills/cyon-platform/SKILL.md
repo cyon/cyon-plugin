@@ -68,8 +68,9 @@ Conditional: WebSockets and long-lived SSE, Managed Server only, enabled on requ
 ## Document root and multiple sites
 
 The home is `/home/<login>/` and the public tree `/home/<login>/public_html/`. The document
-root is configurable per domain and may point at a subdirectory, which is what makes a
-framework `public/` or `web/` layout work.
+root is configurable per domain and may point at a subdirectory of `public_html`, which is what
+makes a framework `public/` or `web/` layout work. A document root outside `public_html` is
+refused.
 
 Two things bite here:
 
@@ -127,14 +128,15 @@ goes in a file or the database.
 
 **SQLite is the first choice** for a new project and for any software that supports it. The
 filesystem is local, so WAL's shared-memory mapping and POSIX locking behave, and a database
-inside the PHP process answers a query without a round trip to a server. It is one file to
-back up and to move, and its own test suite covers every branch of its code.
+inside the PHP process answers a query without a round trip to a server. It needs no server and
+no credentials, and its own test suite covers every branch of its code.
 
 Two things it does not have decide when MariaDB is the better store:
 
 - **No panel.** phpMyAdmin, the my.cyon database tooling and support's database restore work
   with MariaDB only. The assistant queries an SQLite file over SSH instead, through PHP's PDO,
-  since the hosting has no `sqlite3` tool.
+  because the `sqlite3` command line tool is not on every server and old where it is (3.26
+  on s141).
 - **No network access.** Only processes on the hosting open the file. Anything connecting from
   elsewhere, a second server or a reporting tool, needs MariaDB.
 
@@ -145,8 +147,7 @@ database queue.
 
 Whenever SQLite is used: WAL mode, a `busy_timeout` of 2 to 5 seconds, write transactions kept
 short because writers take turns, the file outside the document root, and a scheduled backup
-through `VACUUM INTO` or the backup API. A file copy taken mid-write is a corrupt snapshot, and
-there is no `sqlite3` command line tool on the hosting.
+through `VACUUM INTO` or the backup API. A file copy taken mid-write is a corrupt snapshot.
 
 State which store you chose and why. Do not default silently.
 

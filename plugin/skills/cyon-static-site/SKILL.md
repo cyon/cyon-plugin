@@ -118,6 +118,13 @@ When the frontend needs more than a form, the API is a PHP application in its ow
 Either way the frontend stays a disposable target and the API does not: the API has state and
 deploys the way `cyon-php-app` describes.
 
+## Third-party code
+
+Code taken from elsewhere, a library, a snippet, a font or an icon set, keeps its licence notice
+when it is published. Leave the notice in the file or add it where the licence asks, and name
+the third-party parts and their licences in the answer, so the customer knows what they are
+publishing.
+
 ## With the MCP server connected
 
 In this order:

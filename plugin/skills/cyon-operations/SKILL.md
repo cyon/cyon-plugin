@@ -73,6 +73,20 @@ Either way:
 
 ## Cron hygiene
 
+- The crontab belongs to the whole account, and every site on the hosting shares it. Keep a copy
+  first, change only a block marked for this site, show the customer the difference, and check
+  the result:
+
+  ```sh
+  crontab -l > ~/crontab.bak
+  { sed '/^# BEGIN <site>$/,/^# END <site>$/d' ~/crontab.bak
+    echo '# BEGIN <site>'; echo '<the new lines>'; echo '# END <site>'; } > ~/crontab.new
+  diff ~/crontab.bak ~/crontab.new
+  crontab ~/crontab.new && crontab -l
+  ```
+
+  Never pipe a filtered `crontab -l` straight back into `crontab -`: when the first command fails
+  halfway, the account's crontab is replaced by an empty one. `crontab ~/crontab.bak` restores it.
 - The absolute versioned PHP path in every entry, and `PHP_INI_SCAN_DIR` where custom ini
   settings matter.
 - One instance at a time. A job that can run longer than its interval takes a lock:
@@ -83,6 +97,14 @@ Either way:
   it up.
 - Nothing runs continuously. A worker that should be always-on is a cron job every minute that
   finishes its batch and exits.
+
+## Changes that need the site to stand still
+
+A schema migration, a move between databases or a dump that has to be consistent needs a site
+that writes nothing in the meantime. Switch maintenance mode on first, then dump, migrate or
+move, check, and switch it off last. The framework's own switch does it where there is one,
+`php artisan down` in Laravel; a plain site gets a static maintenance page through `.htaccess`.
+Say how long the site will be down before switching it off for visitors.
 
 ## When it gets slow
 

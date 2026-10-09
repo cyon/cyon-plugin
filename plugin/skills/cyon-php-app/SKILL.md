@@ -15,17 +15,17 @@ it.
 
 ## Layout
 
-The application lives beside the public tree, and only its public folder is served:
+The application lives in its own directory inside the public tree, and only its public folder
+is served:
 
 ```
-/home/<login>/
+/home/<login>/public_html/
   <app>/              application root: code, vendor/, .env, storage/
     public/           the document root, and nothing above it is reachable
-  public_html/        untouched, or other sites
 ```
 
-- Point the site's document root at `<app>/public`. A document root is configurable per domain
-  and may sit anywhere inside the account.
+- Point the site's document root at `public_html/<app>/public`. A document root has to be inside
+  `public_html`: `subdomain_create` and `site_docroot_set` refuse anything outside it.
 - A document root deeper than one level does not inherit a PHP version set higher up, so the
   version is set on the document root itself.
 - `.env`, `vendor/`, `storage/`, `.git` and any SQLite file stay above `public/`, never inside
@@ -35,12 +35,19 @@ The application lives beside the public tree, and only its public folder is serv
 
 **SQLite**, for a new project and for any framework that supports it. It runs inside the PHP
 process, so a query costs no round trip to a server; it needs no database to create and no
-credentials to manage; and it is one file to back up and to move with the application.
+credentials to manage.
 Laravel's defaults since version 11, SQLite with the `database` driver for sessions, cache and
 queue, work here as they are.
 
+It has one writer at a time. A write waits for the one before it, up to `busy_timeout`, so a
+background job that holds a write transaction stalls the web requests that want to write. A
+transaction that reads first and writes later fails as busy when another one wrote in between;
+start such a transaction with `BEGIN IMMEDIATE`. Copying the file is no backup while the site
+runs, see `cyon-operations`.
+
 **MariaDB** when the software requires it, when the database has to be reachable over the
-network, or when someone will work in phpMyAdmin, which only knows MariaDB.
+network, when background jobs write while visitors do, or when someone will work in
+phpMyAdmin, which only knows MariaDB.
 
 Say which you chose and why. With SQLite: WAL mode, a `busy_timeout` of 2 to 5 seconds, short
 write transactions, the file outside `public/`, and a backup through `VACUUM INTO`, see
@@ -94,6 +101,8 @@ runs once at a time, and exits on its own:
 * * * * * /opt/alt/php83/usr/bin/php /home/<login>/<app>/artisan schedule:run >> /home/<login>/<app>/storage/logs/cron.log 2>&1
 ```
 
+- The crontab belongs to the whole account and every site on it shares it. Change it the way
+  `cyon-operations` describes under Cron hygiene, never by piping a filtered copy back.
 - Always the absolute versioned PHP path. Plain `php` in cron runs the default version, which
   is the classic "works in the browser, fails in cron".
 - Export `PHP_INI_SCAN_DIR` when the job depends on custom ini settings.
@@ -120,6 +129,13 @@ application where four things go wrong expensively:
   short, so they do not wait on each other.
 - **Backups while orders come in.** A dump with `--single-transaction` on MariaDB, `VACUUM
   INTO` on SQLite, never a copy of files that are being written.
+
+## Third-party code
+
+Code taken from elsewhere, a library, a snippet, a font or an icon set, keeps its licence notice
+when it is published. Leave the notice in the file or add it where the licence asks, and name
+the third-party parts and their licences in the answer, so the customer knows what they are
+publishing.
 
 ## With the MCP server connected
 

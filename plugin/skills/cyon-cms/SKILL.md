@@ -64,6 +64,8 @@ define('DISABLE_WP_CRON', true);
 ```
 
 The absolute PHP path matters: plain `php` in cron runs the default version, not the site's.
+The crontab is shared by every site on the account, so add the line the way `cyon-operations`
+describes under Cron hygiene.
 For WooCommerce this is not optional, because its Action Scheduler processes orders through
 these tasks.
 
@@ -95,6 +97,10 @@ WooCommerce is WordPress, with the concerns of a shop from `cyon-php-app`:
 - **Order mail against the limit.** Script mail is capped at 100 per hour, 30 in a new
   hosting's first 30 days. Raise the limit in my.cyon before launch, and send newsletters
   through an email service provider, never through the shop.
+- **A real mailbox for the sender.** Order mail goes out from an address on a domain of the
+  hosting, and customer replies and bounces need a mailbox there to land in. WordPress reports
+  every mail as sent either way. The MCP server cannot create a mailbox: the customer creates it
+  in my.cyon under E-Mail before launch.
 - **Payment webhooks** come through WooCommerce's payment plugins. The real cron above is what
   keeps their follow-up work moving.
 - **Backups under writes**: a dump with `--single-transaction`, never a file copy of a database
@@ -109,6 +115,10 @@ WooCommerce is WordPress, with the concerns of a shop from `cyon-php-app`:
    before an update on a live site. Snapshots cover only the declared paths and databases, and
    there is no automatic restore, so do not promise one.
 4. `deploy_key_add` for the upload, `https_enable` and `certificate_get` for the certificate.
+
+The rsync command `deploy_prepare` returns for a dynamic deployment does not delete, and for
+WordPress it must stay that way: WordPress writes `.htaccess`, `wp-content/litespeed/`,
+`advanced-cache.php` and its upgrade folders itself, beyond any path declared as persistent.
 
 Record who owns which path in `.cyon/journal.md`, because the next person to deploy needs to
 know.

@@ -5,6 +5,21 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.2.7 (2026-10-09)
+
+From the internal pilot's feedback:
+
+- `cyon-operations` changes the crontab with a copy first and only inside a block marked for the
+  site, since the crontab is shared by the whole account and a piped rewrite can empty it. It
+  also switches maintenance mode on before a dump or a migration. `cyon-cms` and `cyon-php-app`
+  point there.
+- `cyon-php-app` puts the application inside `public_html`, where the tools accept a document
+  root, and names SQLite's single writer and `BEGIN IMMEDIATE`. `cyon-platform` no longer
+  denies the `sqlite3` tool and no longer lists the file copy as a backup.
+- `cyon-cms` and `cyon-provisioning-checklist` ask for a real mailbox behind a shop's sender
+  address, and `cyon-cms` keeps WordPress uploads without `--delete`.
+- `cyon-static-site` and `cyon-php-app` keep the licence notices of third-party code.
+
 ## 0.2.6 (2026-10-09)
 
 - `cyon-static-site`, `cyon-php-app`, `cyon-cms` and `cyon-provisioning-checklist` put a domain
