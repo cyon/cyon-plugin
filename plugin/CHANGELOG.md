@@ -5,6 +5,11 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.1 (2026-10-12)
+
+- The listing text, icon and links that ChatGPT and Codex show, and OAuth with client registration
+  for the server, so the package can be uploaded to OpenAI's plugin directory.
+
 ## 0.3.0 (2026-10-12)
 
 - The server address is the plugin option `mcp_url`, set to `https://mcp.cyon.ch/mcp`. Claude

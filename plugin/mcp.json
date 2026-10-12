@@ -3,7 +3,17 @@
   "mcpServers": {
     "cyon": {
       "type": "streamable-http",
-      "url": "https://mcp.cyon.ch/mcp"
+      "url": "https://mcp.cyon.ch/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "dcr"
+            }
+          }
+        }
+      }
     }
   }
 }

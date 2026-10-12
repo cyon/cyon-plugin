@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "cyon",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions, through the cyon MCP server.",
   "author": {
     "name": "cyon GmbH",
@@ -9,5 +9,43 @@
   },
   "homepage": "https://www.cyon.ch",
   "license": "MIT",
-  "keywords": ["cyon", "hosting", "php", "litespeed", "mariadb", "deployment"]
+  "keywords": [
+    "cyon",
+    "hosting",
+    "php",
+    "litespeed",
+    "mariadb",
+    "deployment"
+  ],
+  "repository": "https://github.com/cyon/cyon-plugin",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "cyon",
+        "shortDescription": "Build and host on cyon",
+        "longDescription": "Build and publish a website on your cyon hosting. The assistant checks whether a project fits cyon before anything is built, reads your hostings, domains, sites, databases and certificates, creates subdomains and databases, puts a domain you registered on a hosting, sets the PHP version, switches on HTTPS and publishes static sites. Skills explain what cyon runs (PHP, static sites, WordPress and other CMS, SQLite and MariaDB) and what it does not, such as a Node server.\n\nFor cyon customers who own or are the technical contact of a webhosting. You sign in with my.cyon and choose which hostings the assistant may reach; every change asks for a one-line reason and is listed in my.cyon under KI-Agent, where you can revoke access. Publishing PHP, .htaccess or images needs a client with a shell and SSH; in ChatGPT the assistant publishes static text files only. Registering a new domain is an order in my.cyon.",
+        "developerName": "cyon",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Check whether a project fits cyon hosting",
+          "Read hostings, domains, sites and databases",
+          "Create subdomains, databases and HTTPS certificates",
+          "Publish static sites",
+          "Search cyon support articles"
+        ],
+        "websiteURL": "https://www.cyon.ch",
+        "supportURL": "https://www.cyon.ch/support",
+        "privacyPolicyURL": "https://www.cyon.ch/ueber-cyon/datenschutz",
+        "termsOfServiceURL": "https://www.cyon.ch/ueber-uns/agb",
+        "defaultPrompt": [
+          "Which of my cyon hostings has room for a new project?",
+          "Publish a one-page site for my bakery on a new subdomain.",
+          "Can my Laravel app run on my cyon hosting?"
+        ],
+        "brandColor": "#FF961F",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
 }
