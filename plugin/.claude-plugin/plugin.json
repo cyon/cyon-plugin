@@ -1,10 +1,32 @@
 {
   "name": "cyon",
+  "displayName": "cyon",
   "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions, through the cyon MCP server.",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "author": {
     "name": "cyon GmbH",
     "url": "https://www.cyon.ch"
   },
-  "homepage": "https://www.cyon.ch"
+  "homepage": "https://www.cyon.ch",
+  "repository": "https://github.com/cyon/cyon-plugin",
+  "license": "MIT",
+  "keywords": [
+    "cyon",
+    "hosting",
+    "php",
+    "litespeed",
+    "mariadb",
+    "deployment"
+  ],
+  "icon": "./icon.svg",
+  "supportUrl": "https://github.com/cyon/cyon-plugin/issues",
+  "privacyPolicyUrl": "https://www.cyon.ch/ueber-cyon/datenschutz",
+  "userConfig": {
+    "mcp_url": {
+      "type": "string",
+      "title": "cyon MCP server",
+      "description": "Keep the address as it is. Only cyon's own testers point it at another server.",
+      "default": "https://mcp.cyon.ch/mcp"
+    }
+  }
 }

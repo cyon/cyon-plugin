@@ -16,7 +16,7 @@ claude plugin install cyon@cyon
 Codex:
 
 ```
-codex plugin marketplace add https://github.com/cyon/cyon-plugin.git
+codex plugin marketplace add cyon/cyon-plugin
 codex plugin add cyon@cyon
 codex mcp login cyon
 ```

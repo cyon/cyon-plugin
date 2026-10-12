@@ -1,98 +1,57 @@
-# The cyon plugin
+# cyon
 
-Two payloads: the skills, which are platform knowledge that runs on the customer's machine,
-and the declaration of the cyon MCP server's URL. No credential, which is why this can be
-published openly and why setup is two steps.
+Build and publish a website on your cyon hosting with Claude or Codex. The plugin brings two
+things: skills that know what cyon hosting runs and how to deploy to it, and the connection to
+the cyon MCP server, through which the assistant works on your hostings after you approve it in
+my.cyon.
+
+## What the assistant can do
+
+- Check whether a project fits cyon before anything is built: PHP, static sites, WordPress and
+  other CMS, SQLite or MariaDB, cron jobs, and what does not run here, such as a Node server.
+- Read your hostings, domains, sites, databases, PHP versions and certificates.
+- Create a subdomain, put a domain you already registered on a hosting, create a database, set
+  the PHP version, and switch on HTTPS with a Let's Encrypt certificate.
+- Publish a site: over SSH with a deploy key that expires after fifteen minutes, or, in a chat
+  client without a shell, by sending the files of a static site.
+- Search cyon's support articles.
+
+Every change asks for a one-line reason and is listed in my.cyon under KI-Agent, where you also
+revoke the connection.
 
 ## Installing
-
-While the plugin is internal it is served from a cyon hosting, which asks for no account, no
-token and no SSH key. Customers will later install the same thing from the GitHub mirror, where
-the source shortens to `cyon/cyon-plugin`.
 
 Claude Code:
 
 ```
-claude plugin marketplace add http://mvtester.cyon.site/cgi-bin/git/cyon-plugin.git
-claude plugin install cyon@cyon -y
+claude plugin marketplace add cyon/cyon-plugin
+claude plugin install cyon@cyon
 ```
 
-Codex, which reads `plugin.json` and `mcp.json` from this directory through the marketplace
-file under `.agents/plugins/`:
+Codex:
 
 ```
-codex plugin marketplace add http://mvtester.cyon.site/cgi-bin/git/cyon-plugin.git
+codex plugin marketplace add cyon/cyon-plugin
 codex plugin add cyon@cyon
 codex mcp login cyon
 ```
 
-The selector is `cyon@cyon` in both: the marketplace and the plugin are both named `cyon` in
-the manifests, which is independent of what the repository is called or where it is served
-from.
+At the first tool call, or at `codex mcp login`, your browser opens my.cyon. Log in, choose which
+hostings the assistant may reach, and approve. Claude Code asks once for the server address when
+you install the plugin from `/plugin`; keep the address it suggests.
 
-That URL goes through `git-http-backend` as CGI, not to a git host. Both installers clone
-shallow, which plain file serving cannot answer, so `http://mvtester.cyon.site/cyon-plugin.git`
-is the same repository for a manual `git clone` but is refused by the installers.
+## What it connects to and sends
 
-Then sign in: the client opens my.cyon, you log in, approve the connection, and the tools
-appear. Claude starts that flow at the first tool call, Codex at `codex mcp login`. Nothing is
-written to a configuration file by hand, and a remote server pasted into
-`claude_desktop_config.json` is ignored, because connectors live in the app's own state.
+The plugin runs nothing on your machine. The skills are text the assistant reads. The only
+connection is to `https://mcp.cyon.ch/mcp`, cyon's MCP server, which signs you in through
+my.cyon with OAuth and acts on the hostings you approved. A tool call sends the arguments the
+assistant chose, such as a domain name, a one-line reason, or the files of a static site; the
+results come back from your hosting. cyon keeps a journal of every change and the request logs
+needed to run the service. Conversations are not sent to cyon.
 
-Found a problem? Report it in `dev/froox/mycyon-mcp-server`, which is where the plugin is
-edited. Changing the published copy is pointless, the next publish overwrites it.
+Revoke access at any time in my.cyon under KI-Agent.
 
-## Layout
+## Support
 
-| Path | For |
-| --- | --- |
-| `.claude-plugin/plugin.json` | Claude Code: name, version, description |
-| `.mcp.json` | Claude Code's MCP declaration. An `mcpServers` block inline in the plugin manifest is ignored |
-| `plugin.json` | Agent Plugins 1.0.0, which Codex reads |
-| `mcp.json` | Agent Plugins MCP declaration, `streamable-http` |
-| `skills/<name>/SKILL.md` | Both ecosystems, discovered automatically |
-
-## Pointing it at another server
-
-The plugin ships the production URL, which is not the one an internal tester wants: during the
-pilot the server runs on staging, at `https://mcp-staging.cyon.lan/mcp`, reachable over the cyon
-VPN. People working on the service itself point at their own stack instead, usually
-`https://mcp.cyon.tld/mcp`. Either way it is the same override, and the two ecosystems differ in
-how it is spelled, because Claude Code expands environment variables in a plugin's MCP URL and
-Agent Plugins 1.0.0 forbids it (§7.2: clients "MUST NOT perform placeholder or
-environment-variable expansion in `url`").
-
-**Claude Code.** Set the variable, and the plugin connects there instead:
-
-```
-export CYON_MCP_URL=https://mcp-staging.cyon.lan/mcp
-```
-
-Set it where the client runs, not in a container, and in the shell's own configuration file so
-it survives a restart. The same value in the `env` block of `~/.claude/settings.json` works in every shell and when
-Claude Code runs inside an editor, which reads no shell profile. Unset, it uses the production
-URL. The server keeps the name `cyon` either way, so tool names
-are `mcp__cyon__*` in both environments and an eval written against one runs against the other.
-
-**Codex.** There is no partial override for a plugin-provided server, so shadow it with a
-complete block. `codex mcp add cyon --url https://mcp.cyon.tld/mcp` writes one into
-`~/.codex/config.toml` and that entry wins over the plugin's, which `codex mcp list` then
-confirms. By hand, project configuration wins over the global one:
-
-```toml
-[mcp_servers.cyon]
-url = "https://mcp.cyon.tld/mcp"
-```
-
-## Skills
-
-Phase 1 of five, the foundation the rest depends on:
-
-| Skill | Purpose |
-| --- | --- |
-| `cyon-platform` | What the platform runs, what it does not, and the fit check before any architecture |
-| `cyon-preflight` | Audits an existing codebase, splitting blockers from provisioning steps from adjustments |
-| `cyon-provisioning-checklist` | The steps that still need a person in my.cyon, and which ones the tools do instead |
-
-Each carries a `cyon-facts-version`, the snapshot of the platform contract it was written
-against, so a stale skill is detectable.
+Questions about your hosting go to cyon support. Problems with the plugin or the tools can be
+reported in this repository's issues.

@@ -5,6 +5,15 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.0 (2026-10-12)
+
+- The server address is the plugin option `mcp_url`, set to `https://mcp.cyon.ch/mcp`. Claude
+  Code shows it once when the plugin is installed from `/plugin`. The `CYON_MCP_URL` environment
+  variable no longer has any effect: set the option instead, with
+  `claude plugin install cyon@cyon --config mcp_url=<url>` or `/plugin configure cyon@cyon`.
+- A README for customers, a cyon icon and the listing fields of the Claude plugin directory.
+- The plugin is published under the MIT license.
+
 ## 0.2.7 (2026-10-09)
 
 From the internal pilot's feedback:
