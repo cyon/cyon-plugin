@@ -5,6 +5,11 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.3 (2026-10-13)
+
+- The terms of service link points at https://www.cyon.ch/legal/agb; the earlier address answered
+  404. The Claude marketplace file drops a schema address that does not exist.
+
 ## 0.3.2 (2026-10-13)
 
 - The Codex marketplace entry names its installation policy, sign-in on install and category,
