@@ -1,15 +1,23 @@
 {
   "name": "cyon",
+  "interface": {
+    "displayName": "cyon"
+  },
   "description": "The cyon plugin: platform knowledge and the cyon MCP server, for building and publishing a website on cyon hosting.",
   "owner": {
-    "name": "cyon GmbH",
+    "name": "cyon AG",
     "url": "https://www.cyon.ch"
   },
   "plugins": [
     {
       "name": "cyon",
       "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions.",
-      "source": "./plugin"
+      "source": "./plugin",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
     }
   ]
 }

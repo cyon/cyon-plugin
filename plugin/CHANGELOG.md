@@ -5,6 +5,12 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.2 (2026-10-13)
+
+- The Codex marketplace entry names its installation policy, sign-in on install and category,
+  which ChatGPT's workspace import asks for.
+- The publisher is cyon AG, in the manifests, the marketplaces and the license.
+
 ## 0.3.1 (2026-10-12)
 
 - The listing text, icon and links that ChatGPT and Codex show, and OAuth with client registration

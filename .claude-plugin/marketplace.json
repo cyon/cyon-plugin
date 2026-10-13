@@ -3,7 +3,7 @@
   "name": "cyon",
   "description": "The cyon plugin: platform knowledge and the cyon MCP server, for building and publishing a website on cyon hosting.",
   "owner": {
-    "name": "cyon GmbH",
+    "name": "cyon AG",
     "url": "https://www.cyon.ch"
   },
   "plugins": [
