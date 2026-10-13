@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "cyon",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions, through the cyon MCP server.",
   "author": {
     "name": "cyon AG",
@@ -45,6 +45,60 @@
         "brandColor": "#FF961F",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Read the hosting and what it runs",
+              "prompt": "Which cyon hostings do I have, and which PHP versions can I use on them?",
+              "tools_triggered": "hosting_list, hosting_get",
+              "expected_behavior": "Lists the test hosting with its plan, disk quota and the PHP versions it offers, without asking for any credentials."
+            },
+            {
+              "description": "Check whether a project fits before building",
+              "prompt": "Can I run a Laravel app with a Node.js websocket server on my cyon hosting?",
+              "tools_triggered": "hosting_get",
+              "expected_behavior": "Explains, from the hosting's capabilities, that Laravel runs as PHP on the hosting while a permanently running Node.js server does not, and suggests an alternative such as a hosted websocket service."
+            },
+            {
+              "description": "Create a subdomain for a new project",
+              "prompt": "Create a subdomain called review on my hosting for a new landing page.",
+              "tools_triggered": "site_list, subdomain_create",
+              "expected_behavior": "Asks for confirmation before changing the hosting, then creates review.<domain> with its own empty directory and DNS records and reports the new site, or reports that it already exists from an earlier run."
+            },
+            {
+              "description": "Publish a static page",
+              "prompt": "Publish a simple one-page website for a bakery on the review subdomain.",
+              "tools_triggered": "artifact_publish",
+              "expected_behavior": "Writes an index.html (and a stylesheet if used) into the subdomain's document root and returns the public URL, which loads the page."
+            },
+            {
+              "description": "Answer from cyon's support articles",
+              "prompt": "How do I set up my cyon email address on an iPhone?",
+              "tools_triggered": "knowledge_search, knowledge_get",
+              "expected_behavior": "Summarises the steps from the matching cyon support article and links to it."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Registering a new domain is an order in my.cyon, not a tool",
+              "prompt": "Register the domain bakery-review-example.ch for me."
+            },
+            {
+              "description": "No tool deletes anything on the hosting",
+              "prompt": "Delete all databases on my hosting."
+            },
+            {
+              "description": "Publishing without a shell refuses PHP",
+              "prompt": "Publish this PHP contact form on my review subdomain: <?php mail('me@example.com', 'Contact', $_POST['message']); ?>"
+            }
+          ]
+        },
+        "commerce": false
+      },
+      "publication": {
+        "release_notes": "Initial release: check whether a project fits cyon hosting, read hostings, sites, databases and certificates, create subdomains and databases, add a registered domain, switch on HTTPS, publish static sites and search cyon support."
       }
     }
   }

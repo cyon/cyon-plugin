@@ -42,12 +42,21 @@ you install the plugin from `/plugin`; keep the address it suggests.
 
 ## What it connects to and sends
 
-The plugin runs nothing on your machine. The skills are text the assistant reads. The only
-connection is to `https://mcp.cyon.ch/mcp`, cyon's MCP server, which signs you in through
-my.cyon with OAuth and acts on the hostings you approved. A tool call sends the arguments the
-assistant chose, such as a domain name, a one-line reason, or the files of a static site; the
-results come back from your hosting. cyon keeps a journal of every change and the request logs
-needed to run the service. Conversations are not sent to cyon.
+The plugin runs nothing on your machine. The skills are text the assistant reads, and they send
+nothing by themselves. The assistant reaches three destinations, all of them yours or cyon's:
+
+- **cyon's MCP server, `https://mcp.cyon.ch/mcp`**, the connector the plugin declares. It signs you
+  in through my.cyon with OAuth and acts only on the hostings you approved. A tool call sends the
+  arguments the assistant chose, such as a domain name, a one-line reason, or the files of a
+  static site. cyon keeps a journal of every change for six months and request logs for 30 days.
+- **Your cyon hosting over SSH**, in a client with a shell such as Claude Code: `ssh`, `rsync`
+  or `git push` to the server that `connection_get` names, to upload your project and run
+  commands there, with a deploy key that expires after fifteen minutes. Your client asks for
+  permission before running a command, as its settings define.
+- **Your own website over HTTPS**, with `curl`, to check its status, headers and response time.
+
+Nothing goes anywhere else, and the plugin sends no analytics. Your conversations are not sent to
+cyon.
 
 Revoke access at any time in my.cyon under KI-Agent.
 

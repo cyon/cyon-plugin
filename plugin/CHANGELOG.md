@@ -5,6 +5,14 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.4 (2026-10-13)
+
+- `mcp.json` declares the server with its type and URL only, as the Agent Plugins schema allows;
+  the sign-in is discovered from the server. The OpenAI manifest carries the review test cases
+  and release notes.
+- The README names every destination the assistant reaches: the MCP server, the customer's hosting
+  over SSH and the customer's own site over HTTPS.
+
 ## 0.3.3 (2026-10-13)
 
 - The terms of service link points at https://www.cyon.ch/legal/agb; the earlier address answered
