@@ -2,7 +2,7 @@
   "name": "cyon",
   "displayName": "cyon",
   "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions, through the cyon MCP server.",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "author": {
     "name": "cyon AG",
     "url": "https://www.cyon.ch"
@@ -25,7 +25,7 @@
     "mcp_url": {
       "type": "string",
       "title": "cyon MCP server",
-      "description": "Keep the address as it is. Only cyon's own testers point it at another server.",
+      "description": "Keep this address unless cyon support tells you otherwise.",
       "default": "https://mcp.cyon.ch/mcp"
     }
   }

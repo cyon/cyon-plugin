@@ -5,6 +5,10 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.8 (2026-10-14)
+
+- The MCP address setting asks to keep the address unless cyon support says otherwise.
+
 ## 0.3.7 (2026-10-14)
 
 - The icon is a 1024 pixel PNG, which the Claude directory asks for; the SVG stays beside it.
