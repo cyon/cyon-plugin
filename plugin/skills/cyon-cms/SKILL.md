@@ -1,7 +1,7 @@
 ---
 name: cyon-cms
 description: Install, deploy or run WordPress, WooCommerce or a flat-file CMS such as Kirby on cyon hosting. Use when content is edited in the browser, when plugins or themes are installed through an admin, or when uploads must survive a deployment. Covers which paths are persistent and who owns them, updates, LiteSpeed Cache, replacing wp-cron with a real cron, and what a WooCommerce shop needs on top.
-cyon-facts-version: 2026-10-09
+cyon-facts-version: 2026-10-14
 ---
 
 # A CMS on cyon
@@ -111,9 +111,9 @@ WooCommerce is WordPress, with the concerns of a shop from `cyon-php-app`:
 1. `subdomain_create` for a new site, `domain_add` for a domain the customer already registered,
    or `site_list` and `site_get` to find an existing one and see whether its directory is empty.
 2. `php_version_set` and `database_create`.
-3. `deploy_prepare` with `type: dynamic`, the persistent paths decided above, and a snapshot
-   before an update on a live site. Snapshots cover only the declared paths and databases, and
-   there is no automatic restore, so do not promise one.
+3. `deploy_prepare` with `type: dynamic` and the persistent paths decided above. Before an update
+   on a live site, back up its database and uploads over SSH, as `cyon-operations` describes:
+   cyon takes no snapshot of a deployment, and its daily backup guarantees no restore point.
 4. `deploy_key_add` for the upload, `https_enable` and `certificate_get` for the certificate.
 
 The rsync command `deploy_prepare` returns for a dynamic deployment does not delete, and for

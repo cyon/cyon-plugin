@@ -5,6 +5,13 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.6 (2026-10-14)
+
+- `cyon-cms`, `cyon-operations` and `cyon-provisioning-checklist` no longer offer a snapshot before
+  an update: cyon takes none per deployment, and its daily backup guarantees no restore point, so
+  the backup before a change on a live site is taken over SSH. `cyon-operations` names cyon's daily
+  backup and the database dumps of the last three days in `~/backups_cyon/mysql`.
+
 ## 0.3.5 (2026-10-14)
 
 - The OpenAI listing names cyon AG as developer, as the other manifests do.

@@ -1,7 +1,7 @@
 ---
 name: cyon-provisioning-checklist
 description: The steps on a cyon hosting that a person has to perform in my.cyon, as an ordered runbook to hand over. Use when preparing a cyon hosting for a deployment, when a tool call refuses because a prerequisite is missing, or when asked what the customer has to click before a site can go live. Says which steps the cyon MCP server performs itself and which genuinely need a human, so nothing is claimed as automated that is not.
-cyon-facts-version: 2026-10-09
+cyon-facts-version: 2026-10-14
 ---
 
 # Provisioning a cyon hosting
@@ -79,5 +79,6 @@ something they need to do, and never describe their step as done.
 
 Before publishing, confirm the layout with `deploy_prepare`: it validates the declared
 persistent paths, checks Git is not tracking them, and returns the upload command that matches
-the shell the assistant actually has. Snapshots are optional and cover only the declared paths,
-so do not promise a restore that does not exist.
+the shell the assistant actually has. cyon takes no snapshot of a deployment, and its daily
+backup guarantees no restore point, so back up a live site over SSH first and do not promise a
+restore that does not exist.

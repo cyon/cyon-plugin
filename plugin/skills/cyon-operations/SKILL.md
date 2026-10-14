@@ -1,7 +1,7 @@
 ---
 name: cyon-operations
 description: Keep a site on cyon hosting running once it is live, with backups that restore, cron jobs that do not overlap, the checks to repeat after a change, what to measure when it gets slow, and what to hand over to the customer. Use after a deployment, when setting up maintenance, or when a working site has become slow. Says where the assistant stops and the customer or cyon takes over.
-cyon-facts-version: 2026-09-23
+cyon-facts-version: 2026-10-14
 ---
 
 # Operating a site on cyon
@@ -66,10 +66,14 @@ Either way:
 
 - keep backups outside the document root,
 - copy them off the hosting regularly, since a backup on the same account shares its fate,
-- cyon's own restore path runs through support and assumes MariaDB; an SQLite file is covered
-  only by the application's own backups,
-- a `deploy_prepare` snapshot is not a backup: it is optional, covers only the declared paths
-  and databases, and has no automatic restore.
+- cyon backs up the hosting's files and databases daily and keeps them for up to two weeks. A
+  restore goes through support and has no guaranteed point in time. The MariaDB dumps of the last
+  three days also sit on the hosting in `~/backups_cyon/mysql`, for a restore over SSH without
+  support,
+- an SQLite file is in cyon's file backup only as a copy taken while it may have been written, so
+  the application's own backup above is the one to rely on,
+- cyon takes no snapshot when the assistant deploys, and its daily backup is no rollback point,
+  so the backup before a change is the one taken over SSH.
 
 ## Cron hygiene
 
