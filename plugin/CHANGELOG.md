@@ -5,6 +5,10 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.7 (2026-10-14)
+
+- The icon is a 1024 pixel PNG, which the Claude directory asks for; the SVG stays beside it.
+
 ## 0.3.6 (2026-10-14)
 
 - `cyon-cms`, `cyon-operations` and `cyon-provisioning-checklist` no longer offer a snapshot before
