@@ -5,6 +5,10 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.5 (2026-10-14)
+
+- The OpenAI listing names cyon AG as developer, as the other manifests do.
+
 ## 0.3.4 (2026-10-13)
 
 - `mcp.json` declares the server with its type and URL only, as the Agent Plugins schema allows;
