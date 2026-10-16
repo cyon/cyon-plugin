@@ -148,5 +148,6 @@ publishing.
    hosting; say so when asking.
 5. `deploy_key_add`, then the commands `deploy_prepare` returned.
 6. `https_enable`, `certificate_get` until active, `https_enable` again for the redirect.
+   Until then HTTPS is pending, not done; with `dns_points_here` false it stays pending.
 
 Record the layout, the persistent paths and the cron entries in `.cyon/journal.md`.

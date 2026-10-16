@@ -5,6 +5,11 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.9 (2026-10-16)
+
+- The static site, PHP app and CMS skills say that a pending certificate is not HTTPS yet, and
+  that it stays pending while the name does not resolve to the hosting.
+
 ## 0.3.8 (2026-10-14)
 
 - The MCP address setting asks to keep the address unless cyon support says otherwise.

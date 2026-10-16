@@ -141,7 +141,8 @@ In this order:
    shell access to the whole account: ask the customer first, and send
    `confirm_shell_access: true` only after a yes.
 5. `https_enable`, then `certificate_get` until the certificate is active, then `https_enable`
-   once more so the redirect to HTTPS applies.
+   once more so the redirect to HTTPS applies. Until then, tell the customer HTTPS is pending,
+   not done. With `dns_points_here` false it stays pending until the name resolves here.
 
 Record the site, the target and the commands in `.cyon/journal.md`.
 

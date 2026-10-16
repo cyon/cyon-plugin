@@ -115,6 +115,8 @@ WooCommerce is WordPress, with the concerns of a shop from `cyon-php-app`:
    on a live site, back up its database and uploads over SSH, as `cyon-operations` describes:
    cyon takes no snapshot of a deployment, and its daily backup guarantees no restore point.
 4. `deploy_key_add` for the upload, `https_enable` and `certificate_get` for the certificate.
+   Until `certificate_get` reports it active, HTTPS is pending, not done; with
+   `dns_points_here` false it stays pending until the name resolves here.
 
 The rsync command `deploy_prepare` returns for a dynamic deployment does not delete, and for
 WordPress it must stay that way: WordPress writes `.htaccess`, `wp-content/litespeed/`,

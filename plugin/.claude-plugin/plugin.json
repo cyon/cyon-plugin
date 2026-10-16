@@ -2,7 +2,7 @@
   "name": "cyon",
   "displayName": "cyon",
   "description": "Build and publish a website on cyon hosting: what the platform runs, whether a stack fits, and the hosting, database, certificate and deployment actions, through the cyon MCP server.",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "author": {
     "name": "cyon AG",
     "url": "https://www.cyon.ch"
