@@ -12,6 +12,10 @@ cannot run, discovered at deployment.
 
 Read the fit check first. If the requirement does not fit, say so before designing anything.
 
+The runtime names below are for your decisions. Speak to the customer in the words of cyon.ch:
+a plan has Rechenleistung in percent (a Triple has 150%), RAM in GB and SSD-Webspace, and LVE,
+CloudLinux and software versions come up only when the customer asks something technical.
+
 ## Fit check, before any architecture
 
 Run the requirement against the "no" list below. If it genuinely needs something absent,

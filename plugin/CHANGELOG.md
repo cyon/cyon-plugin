@@ -5,6 +5,11 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.10 (2026-10-19)
+
+- The platform skill describes a plan to the customer as cyon.ch does: Rechenleistung in
+  percent, RAM and SSD-Webspace, without CloudLinux or software versions unless asked.
+
 ## 0.3.9 (2026-10-16)
 
 - The static site, PHP app and CMS skills say that a pending certificate is not HTTPS yet, and
