@@ -5,6 +5,12 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.11 (2026-10-19)
+
+- The troubleshooting skill names a dropped certificate request (`state: not_requested`) as a
+  cause of a certificate warning, and no longer the Let's Encrypt terms, which `https_enable`
+  refuses outright.
+
 ## 0.3.10 (2026-10-19)
 
 - The platform skill describes a plan to the customer as cyon.ch does: Rechenleistung in

@@ -18,8 +18,8 @@ Read-only first, in this order:
 
 1. `site_get` for the site: its document root, PHP version, certificate, redirects, directory
    protection, and whether its directory is empty.
-2. `certificate_get` when the complaint involves HTTPS: whether a certificate is active or
-   pending, and whether DNS points here at all.
+2. `certificate_get` when the complaint involves HTTPS: whether a certificate is active,
+   pending or no longer requested, and whether DNS points here at all.
 3. `hosting_get` for the hosting's state and quotas. A suspended hosting stays readable and
    refuses every write; a full disk breaks uploads and sessions without saying why.
 4. `curl -sI https://<site>/` and the failing URL, for the status and headers a visitor
@@ -39,7 +39,7 @@ not one.
 | Custom PHP settings ignored | They are read only from `~/etc/php_settings/conf.d/00-mycyon.ini`, the account ini the PHP settings page in my.cyon sets up |
 | Works in the browser, fails in cron | Cron runs the default PHP version unless given `/opt/alt/phpXY/usr/bin/php`, and needs `PHP_INI_SCAN_DIR` for custom settings |
 | `exec()`, `proc_open()` or a shell-out to ImageMagick fails | The function is disabled and has to be enabled in my.cyon, as a security decision. The `imagick` extension itself needs no function |
-| Certificate warning | Still pending, poll `certificate_get`; DNS not pointing here; or the Let's Encrypt terms not accepted |
+| Certificate warning | Still pending, poll `certificate_get`; DNS not pointing here; or the request was dropped (`state: not_requested`), call `https_enable` again. Missing Let's Encrypt terms never leave a request pending: `https_enable` refuses outright |
 | Form or shop mail never arrives | The sender is not on a domain of this hosting, which Exim refuses, or the limit is reached: 100 per hour, 30 in a new hosting's first 30 days |
 | Slow, or a job dies halfway | LVE limits a process's time and resources. A long-running process is killed, not queued |
 
