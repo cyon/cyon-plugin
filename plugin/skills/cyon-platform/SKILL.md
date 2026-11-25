@@ -210,6 +210,21 @@ Sending visitors from HTTP to HTTPS is a setting on the site, not a rewrite in `
 Do not write one: the setting survives a deployment and cannot collide with an application's
 own rules. It only works once the certificate is live, and takes a few minutes to apply.
 
+## Password protection
+
+A password on a site or directory is HTTP Basic Auth, and it needs two files. With the
+`.htaccess` block alone, nobody gets in.
+
+- The password file, outside the document root: a line `user:hash`, the hash from
+  `openssl passwd -apr1`.
+- The `AuthType Basic` block in `.htaccess`, with `AuthUserFile` naming that file by its
+  absolute path.
+
+Before reporting the protection as done, check that the password file exists and holds the
+user, then give the customer the user name and the password they chose or you generated.
+Without a shell neither file can be written: send the customer to Verzeichnisschutz in my.cyon,
+which writes both.
+
 ## When the cyon MCP server is connected
 
 The tools answer what is true of *this* hosting and only knowable live: which PHP versions it

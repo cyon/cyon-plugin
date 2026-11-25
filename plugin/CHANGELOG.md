@@ -5,6 +5,11 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.13 (2026-11-25)
+
+- The platform skill says that a password protection needs the password file as well as the
+  `.htaccess` block, and to check that file before reporting the protection as done.
+
 ## 0.3.11 (2026-10-19)
 
 - The troubleshooting skill names a dropped certificate request (`state: not_requested`) as a
