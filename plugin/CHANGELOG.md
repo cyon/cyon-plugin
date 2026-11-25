@@ -5,6 +5,13 @@ update an installed plugin only when its version moves, so every change here has
 version. The tools themselves come from the cyon MCP server and change with it, not with the
 plugin.
 
+## 0.3.14 (2026-11-25)
+
+- The CMS skill walks through a WordPress update over SSH: a backup outside the document root
+  first, the pending list shown to the customer, one component at a time with a check after
+  each, and the way back. It says the backup is the customer's, since cyon guarantees no
+  restore point.
+
 ## 0.3.13 (2026-11-25)
 
 - The platform skill says that a password protection needs the password file as well as the

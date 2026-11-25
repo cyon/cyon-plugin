@@ -1,6 +1,6 @@
 ---
 name: cyon-cms
-description: Install, deploy or run WordPress, WooCommerce or a flat-file CMS such as Kirby on cyon hosting. Use when content is edited in the browser, when plugins or themes are installed through an admin, or when uploads must survive a deployment. Covers which paths are persistent and who owns them, updates, LiteSpeed Cache, replacing wp-cron with a real cron, and what a WooCommerce shop needs on top.
+description: Install, deploy or run WordPress, WooCommerce or a flat-file CMS such as Kirby on cyon hosting. Use when content is edited in the browser, when plugins or themes are installed through an admin, or when uploads must survive a deployment. Covers which paths are persistent and who owns them, updating core, plugins and themes with a backup first, LiteSpeed Cache, replacing wp-cron with a real cron, and what a WooCommerce shop needs on top.
 cyon-facts-version: 2026-10-14
 ---
 
@@ -81,11 +81,68 @@ for them is a PHP problem, not a cache problem; see `cyon-operations`.
 
 ## Updates
 
-Core, plugin and theme updates change files on the running site. Before one:
+Core, plugin and theme updates change the files and often the database of the running site.
+cyon takes no snapshot before an update, and its daily backup guarantees no restore point, so
+the backup is the customer's, and you take it for them over SSH before the first change. Tell
+the customer that before you start, and afterwards tell them where the backup is.
 
-- take a database dump and a copy of the persistent paths,
-- never update during a deployment, or the two overwrite each other,
-- update one component at a time on a site that matters, and check the site after each.
+Updating needs a shell. A client without one cannot take the backup, so the customer updates
+in the WordPress admin after backing up the site themselves.
+
+Never update during a deployment, or the two overwrite each other.
+
+**1. WP-CLI with the site's PHP.** `deploy_key_add` for the session; the key lasts fifteen
+minutes, so a long run needs a fresh one. WP-CLI goes into `~/bin` and runs with the PHP
+version `site_get` reports for the site (`php83` below), because plain `php` is the account's
+default. `DOCROOT` is the document root from `site_get`:
+
+```sh
+mkdir -p ~/bin ~/backups
+curl -sSfo ~/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+DOCROOT=<document root>
+WP="/opt/alt/php83/usr/bin/php $HOME/bin/wp --path=$DOCROOT"
+```
+
+**2. The backup, outside the document root.** A database dump and the site's files without
+`wp-content/uploads/`, which an update does not touch:
+
+```sh
+STAMP=$(date +%F-%H%M)
+$WP db export ~/backups/<site>-$STAMP.sql --single-transaction
+tar -czf ~/backups/<site>-$STAMP.tar.gz --exclude=./wp-content/uploads -C "$DOCROOT" .
+```
+
+**3. What is pending.** Show the list to the customer, with the version each component has now,
+and ask before updating:
+
+```sh
+$WP core check-update
+$WP plugin list --update=available
+$WP theme list --update=available
+```
+
+**4. One component at a time:** plugins, then themes, then core, and check the site after each.
+A PHP fatal error shows visitors WordPress's critical error page with status 500:
+
+```sh
+$WP plugin update <plugin>
+curl -s -o /dev/null -w '%{http_code}\n' https://<site>/
+curl -s -o /dev/null -w '%{http_code}\n' https://<site>/wp-login.php
+```
+
+Core is `$WP core update` followed by `$WP core update-db`. With LiteSpeed Cache active, finish
+with `$WP litespeed-purge all`, or visitors keep seeing pages from before.
+
+**5. When a step breaks the site**, put that one component back to the version from step 3:
+`$WP plugin install <plugin> --version=<old> --force`. That works for plugins from
+wordpress.org only. A premium plugin, or a site that is still broken, goes back to the backup:
+`$WP db import ~/backups/<site>-<stamp>.sql` and
+`tar -xzf ~/backups/<site>-<stamp>.tar.gz -C "$DOCROOT"`. Importing the dump discards
+everything written since, on a shop the orders and customer accounts too, so ask the customer
+before importing it and prefer putting back the one component.
+
+Write the versions before and after and the backup paths into `.cyon/journal.md`. The backups
+count against the hosting's storage, and deleting old ones is up to the customer.
 
 cyon runs Patchman on every server, which patches known vulnerabilities in customer
 applications. It is a net under the site, not a replacement for updating it.
